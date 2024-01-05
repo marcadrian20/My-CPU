@@ -1,39 +1,22 @@
-NOOP 5'b00000
-MOV 5'b00001
-ADD 5'b00010
-SUB 5'b00011
-NC 5'b00100
-DEC 5'b00101
-AND 5'b00110
-OR 5'b00111
-XOR 5'b01000
-NOT 5'b01001
-LDR 5'b01010
-STR 5'b01011
-LDI 5'b01100
-JMP 5'b01101
-JZ 5'b01110
-JNZ 5'b01111
-JC 5'b10000
-JNC 5'b10001
-HALT 5'b10010
-////////////////////
-INSTRUCTION FORMAT: M-TYPE(MARK TYPE)
-MOV:
-15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0
-^^^^^^^^^^^^^^|^^^^^^|^^^^^|^^^^^|--
-OPCODE		ADDRM  REG   REG
-
-ADDRM->Addressing Mode(on imediate addresing shit breaks loose,same for adresses)
-On imediate adressing MOV can use only 5 bits for values (2^5=32)=>Use LDI for 11bit
-on direct adressing: limited to 8bits of mem=>use LD
-15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0
-^^^^^^^^^^^^^^|^^^^^^|^^^^^|^^^^^^^^^
-OPCODE		ADDRM  REG   VALUE/MEM
-LD:
-15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0
-^^^^^^^^^^^^^^|^^^^^^|^^^^^^^^^^^^^^^
-OPCODE		 REG   	MEM_ADDR
+NOP 0000
+ADD 0001 
+SUB 0010
+INC 0011
+DEC 0100
+AND 0101
+OR  0110
+XOR 0111
+NOT 1000
+MOV 1001
+LOAD 1010
+STORE 1011
+LDI 1100
+JMP 1101
+JZ/JEQ 1110
+JNZ 1111
+JC 
+JNC
+HALT
 
 //////////////////////
 // 7 6 5 4  3 2 1 0

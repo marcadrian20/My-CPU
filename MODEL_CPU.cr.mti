@@ -12,8 +12,15 @@ Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
 Top level modules:
 	counter
 
-} {} {}} C:/Users/marca/Desktop/CPU/CPU.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/CPU.v
+} {} {}} C:/Users/marca/Desktop/CPU/MachineStates.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/MachineStates.v
 Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
+
+} {} {}} C:/Users/marca/Desktop/CPU/ControlUnit.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/ControlUnit.v
+Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
+-- Compiling module ControlUnit
+
+Top level modules:
+	ControlUnit
 
 } {} {}} C:/Users/marca/Desktop/CPU/Register.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/Register.v
 Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009

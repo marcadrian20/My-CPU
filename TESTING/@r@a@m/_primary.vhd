@@ -8,7 +8,8 @@ entity RAM is
         st              : in     vl_logic;
         clk             : in     vl_logic;
         oe              : in     vl_logic;
-        addr            : in     vl_logic_vector;
+        reset           : in     vl_logic;
+        addr            : in     vl_logic_vector(7 downto 0);
         data            : inout  vl_logic_vector
     );
 end RAM;

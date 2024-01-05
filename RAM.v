@@ -1,15 +1,15 @@
 module RAM
 #(parameter BitCount=16)
-  (input wire st,clk,oe,
-   input wire[BitCount-1:0] addr,
+  (input wire st,clk,oe,reset,
+   input wire[7:0] addr,
    inout wire[BitCount-1:0] data);
 //oe->output enable
 //st->store
 //addr is the adress we are trying to access
 //data is bidirectional ->inout makes sense
 //for ease and readability im using regs
-    reg [16:0] Buffer;
-    reg [16:0] Memory[0:255];
+    reg [15:0] Buffer;
+    reg [15:0] Memory[0:255];
 //basically a 2d arr of adresses cus im lazy
     always @(posedge clk) begin
       if(st)
@@ -21,4 +21,12 @@ module RAM
 //ideally we read when we dont write 
 //and write when we dont read
 //if those conditions are not met the output goes high imp
+  integer i;
+  always @(posedge reset) begin
+    if(reset) begin
+    for(i=0;i<256;i=i+1)
+      Memory[i]<=16'b0;  
+    Buffer<=16'b0;
+      end
+  end
 endmodule

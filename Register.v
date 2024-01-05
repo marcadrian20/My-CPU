@@ -1,6 +1,6 @@
 module register 
 #(parameter BitCount=16)
-  (input wire st,clk,
+  (input wire st,clk,reset,
    input wire[BitCount-1:0] in,
    output reg [BitCount-1:0] out);
 ///st->write enable,clk-clock
@@ -8,5 +8,9 @@ module register
  always @(posedge clk) begin
    if(st)
      out<=in;
+ end
+ always @(posedge reset) begin
+    if(reset)
+      out<=16'b0;
  end
  endmodule

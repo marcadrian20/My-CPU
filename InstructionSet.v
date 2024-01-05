@@ -17,7 +17,7 @@
 `define JNZ 5'b10000
 `define JC 5'b10001
 `define JNC 5'b10010
-`define HALT 5'b10011
+`define HLT 5'b10011
 /////////
 /*
 `define LSHL 5'b10011 ->logical shift

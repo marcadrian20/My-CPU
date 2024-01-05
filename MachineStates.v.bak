@@ -1,0 +1,14 @@
+`define S_FETCH 4'b0000
+`define S_FETCH_INST 4'b0001
+`define S_JMP 4'b0010
+`define S_ALU_FETCH 4'b0011
+`define S_ALU_OUT 4'b0100
+`define S_HALT 4'b0101
+`define S_NEXT 4'b0110
+`define S_FETCH_DATA 4'b0111
+`define S_SET_REG 4'b1000
+`define S_MOV_LOAD 4'b1001
+`define S_MOV_STORE 4'b1010
+`define S_SET_ADDR 4'b1011
+`define S_OUTPUT 4'b1100
+`define S_INPUT 4'b1101
