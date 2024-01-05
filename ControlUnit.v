@@ -13,7 +13,7 @@ initial
   
 always @(posedge clk) begin
   opcode=instruction[15:11];
-  ADDRM=(opcode==`MOV)?instruction[10:8]:3'b0;/Addressing modes
+  ADDRM=(opcode==`MOV)?instruction[10:8]:3'b0;//Addressing modes
   
 end
 always @(posedge clk) begin

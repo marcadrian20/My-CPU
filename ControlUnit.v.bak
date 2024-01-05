@@ -5,7 +5,7 @@ module ControlUnit(input wire [15:0]instruction,
                    output reg [3:0]cycle,
                    output reg [2:0] ADDRM,
                    output reg [4:0] opcode );
-localparam Immd_addd=3'b001;
+localparam Immd_addr=3'b001;
 localparam Reg_addr=3'b010;
 localparam Dir_addr=3'b011;
 initial 
