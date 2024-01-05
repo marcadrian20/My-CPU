@@ -1,0 +1,25 @@
+`include "InstructionSet.v"
+module ControlUnit(input wire [15:0]instruction,
+                   input wire clk,reset_cycle,
+                   output wire state,
+                   output reg [3:0]cycle,
+                   output reg [2:0] ADDRM,
+                   output reg [4:0] opcode );
+localparam Immd_addr=3'b001;
+localparam Reg_addr=3'b010;
+localparam Dir_addr=3'b011;
+initial 
+  cycle=0;
+  
+always @(posedge clk) begin
+  opcode=instruction[15:11];
+  ADDRM=(opcode==`MOV)?instruction[10:8]:3'b0;/Addressing modes
+  
+end
+always @(posedge clk) begin
+  cycle=(cycle>6)?0:cycle+1;
+  end
+always @(posedge reset_cycle) begin
+    cycle=0;
+  end
+endmodule

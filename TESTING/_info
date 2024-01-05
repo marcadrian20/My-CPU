@@ -1,0 +1,105 @@
+m255
+K3
+13
+cModel Technology
+dC:\Windows\System32
+vALU
+IiaTd4nk7XoPaLRcF?e?a13
+VOeZX1meSiQTRIg2eLL9PR1
+Z0 dC:\Users\marca\Desktop\CPU
+w1704414075
+8C:/Users/marca/Desktop/CPU/ALU.v
+FC:/Users/marca/Desktop/CPU/ALU.v
+L0 2
+Z1 OV;L;6.5b;42
+r1
+31
+Z2 !s102 -nocovercells
+Z3 o-work TESTING -nocovercells -O0
+n@a@l@u
+!s100 n4<1YSO28_efKzl=6JKeP3
+!s85 0
+!s101 -O0
+vControlUnit
+I283`gn>V7cj[j1DmC:?=G2
+V`45CPoGY;Q6RPHFaLEI7j3
+Z4 dC:\Users\marca\Desktop\CPU
+w1704412739
+8C:/Users/marca/Desktop/CPU/ControlUnit.v
+FC:/Users/marca/Desktop/CPU/ControlUnit.v
+L0 2
+R1
+r1
+31
+R2
+R3
+n@control@unit
+!s100 NSoYWLZMSJU1Y;ne`Hd0o2
+!s85 0
+!s101 -O0
+vcounter
+I[EX0<`JZCnT;RVlOC5=2[1
+Vo7PiTGY>FWn14d^IaYzW[0
+R4
+w1704407302
+8C:/Users/marca/Desktop/CPU/ProgramCounter.v
+FC:/Users/marca/Desktop/CPU/ProgramCounter.v
+L0 1
+R1
+r1
+31
+R2
+R3
+!s100 P0d@FZ_kCi6g>K_E9@<AN0
+!s85 0
+!s101 -O0
+vCPU_Registers
+!s100 E14jV0M]H<ISfCn]?zjag1
+IQbzjddUGR0:6e[QDhjPA63
+V^CKSS[z7dGOcC<AhZ@eN23
+R4
+w1704409080
+8C:/Users/marca/Desktop/CPU/CPU_Registers.v
+FC:/Users/marca/Desktop/CPU/CPU_Registers.v
+L0 1
+R1
+r1
+!s85 0
+31
+!s101 -O0
+R2
+R3
+n@c@p@u_@registers
+vRAM
+I_hAz6nmNVm9zhRb8XBHF@3
+VH2GhaDZ94o6lZ8Hff5ZWO0
+R4
+w1704412197
+8C:/Users/marca/Desktop/CPU/RAM.v
+FC:/Users/marca/Desktop/CPU/RAM.v
+L0 1
+R1
+r1
+31
+R2
+R3
+n@r@a@m
+!s100 J[D[K@gYSl8idhgd^PE6e1
+!s85 0
+!s101 -O0
+vregister
+IfR<^Mb;FR:zMj1bjh_8_[0
+V`0<<?IIE5^PjZV^mNRYK53
+R4
+w1704412203
+8C:/Users/marca/Desktop/CPU/Register.v
+FC:/Users/marca/Desktop/CPU/Register.v
+L0 1
+R1
+r1
+31
+R2
+R3
+!s100 WQnzSz[PeN2=_3ND=Q`U20
+!s85 0
+!s101 -O0
