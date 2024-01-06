@@ -1,4 +1,11 @@
-C:/Users/marca/Desktop/CPU/RAM.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/RAM.v
+C:/Users/marca/Desktop/CPU/BOARD.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/BOARD.v
+Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
+-- Compiling module machine
+
+Top level modules:
+	machine
+
+} {} {}} C:/Users/marca/Desktop/CPU/RAM.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/RAM.v
 Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
 -- Compiling module RAM
 

@@ -3,11 +3,12 @@
 module ControlUnit(input wire [15:0]instruction,
                    input wire clk,reset_cycle,reset,
                    output reg halted,
-                   output reg [3:0]cycle,
+                   output reg [2:0]cycle,
                    output reg [2:0] ADDRM,
+                   output reg [3:0] state,
                    output reg [4:0] opcode);
 wire c_halt;
-reg [3:0]state;
+//reg [3:0]state;
 //////////////////////////        ___________Addressing modes____________________________
 localparam Immd_addr=3'b001;   //||Immediate: REG a<=NUMBER for ex: MOV A 5             ||
 localparam Reg_addr=3'b010;    //||Register mode: MOV A B                               ||

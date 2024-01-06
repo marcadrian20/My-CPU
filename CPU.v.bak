@@ -1,5 +1,6 @@
 module CPU(input wire clk,reset,
-           output wire [7:0] addr_bus,
+           output wire I_MEM_W,D_MEM_W,D_MEM_OE,I_MEM_OE,
+           output wire [7:0] d_addr_bus,i_addr_bus,
            inout wire [15:0]DATA_BUS,BUS);
 /*reg [7:0]FLAGS;
 initial 
@@ -26,25 +27,41 @@ register INST_REG(.st(),
                   .reset(reset),
                   .in(BUS),
                   .out(instr_reg_out));
+//////////CPU registers
+wire [15:0] regA_out;
+wire [2:0] CPU_REG_SEL_IN,CPU_REG_SEL_OUT;
+CPU_Registers CPU_regs(.clk(clk),
+              .data_in(DATA_BUS),
+              .sel_in(CPU_REG_SEL_IN),
+              .sel_out(CPU_REG_SEL_OUT),
+              .write_enable(),
+              .output_enable(),
+              .data_out(DATA_BUS),
+              .regA(regA_out));
+
 ////////////////ALU
 wire [15:0] ALU_out;
 ALU ALU_(.enable(),
          .clk(clk),
-         .OPCODE(),
-         .in_a(),
+         .OPCODE(OPCODE),
+         .in_a(regA_out),
          .in_b(),
          .out(ALU_out),
          .SignFlag(sign_flag),
          .CFlag(carry_flag),
          .ZeroFlag(zero_flag));
-//////////CPU registers
-wire [15:0] regA_out;
-CPU_Registers CPU_regs(.clk(clk),
-              .data_in(DATA_BUS),
-              .sel_in(),
-              .sel_out(),
-              .write_enable(),
-              .output_enable(),
-              .data_out(DATA_BUS),
-              .regA(regA_out));
+         
+///////////Control Unit
+wire cpu_halted,reset_cycle;
+wire [2:0] m_cycle,ADDRM_;
+wire [3:0] cpu_state;
+wire [4:0] OPCODE;
+ControlUnit CU(.instruction(instr_reg_out),
+               .reset_cycle(reset_cycle),
+               .reset(reset),
+               .halted(cpu_halted),
+               .cycle(m_cycle),
+               .ADDRM(ADDRM_),
+               .state(cpu_state),
+               .opcode(OPCODE));
 endmodule

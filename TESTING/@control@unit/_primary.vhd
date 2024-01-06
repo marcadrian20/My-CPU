@@ -7,8 +7,9 @@ entity ControlUnit is
         reset_cycle     : in     vl_logic;
         reset           : in     vl_logic;
         halted          : out    vl_logic;
-        cycle           : out    vl_logic_vector(3 downto 0);
+        cycle           : out    vl_logic_vector(2 downto 0);
         ADDRM           : out    vl_logic_vector(2 downto 0);
+        state           : out    vl_logic_vector(3 downto 0);
         opcode          : out    vl_logic_vector(4 downto 0)
     );
 end ControlUnit;

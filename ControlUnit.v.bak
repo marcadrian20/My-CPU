@@ -3,11 +3,12 @@
 module ControlUnit(input wire [15:0]instruction,
                    input wire clk,reset_cycle,reset,
                    output reg halted,
-                   output reg [3:0]cycle,
+                   output reg [2:0]cycle,
                    output reg [2:0] ADDRM,
+                   output reg [3:0] state,
                    output reg [4:0] opcode);
 wire c_halt;
-reg [3:0]state;
+/reg [3:0]state;
 //////////////////////////        ___________Addressing modes____________________________
 localparam Immd_addr=3'b001;   //||Immediate: REG a<=NUMBER for ex: MOV A 5             ||
 localparam Reg_addr=3'b010;    //||Register mode: MOV A B                               ||
@@ -37,7 +38,7 @@ always @(posedge clk&~halted) begin///obv important to not be halted ;)))
     
     `T5: state=`S_NEXT;
     endcase
-  cycle=(cycle>6)?0:cycle+1;//The state machine has 7/8 states(retarded states to be precise)
+  cycle=(cycle>4)?0:cycle+1;//The state machine has 7/8 states(retarded states to be precise)
 end
 /////////////////////Reseting on reset_cycle or reset command
 always @(posedge reset_cycle or posedge reset) begin//not necessarily good practice

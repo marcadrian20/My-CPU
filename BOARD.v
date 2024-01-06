@@ -8,15 +8,17 @@ CPU CPU_(.clk(clk),
          .i_addr_bus(i_addr_bus),
          .DATA_BUS(DATA_BUS),
          .BUS(BUS));
-RAM I_MEM(.st(),
+wire I_MEM_W,I_MEM_OE;
+RAM I_MEM(.st(I_MEM_W),
           .clk(clk),
-          .oe(),
+          .oe(I_MEM_OE),
           .reset(reset),
           .addr(i_addr_bus),
           .data(BUS));
-RAM D_MEM(.st(),
+wire D_MEM_W,D_MEM_OE;
+RAM D_MEM(.st(D_MEM_W),
           .clk(clk),
-          .oe(),
+          .oe(D_MEM_OE),
           .reset(reset),
           .addr(d_addr_bus),
           .data(DATA_BUS));
