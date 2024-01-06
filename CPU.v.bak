@@ -36,5 +36,15 @@ ALU ALU_(.enable(),
          .out(ALU_out),
          .SignFlag(sign_flag),
          .CFlag(carry_flag),
-         .ZeroFlag()zero_flag);
+         .ZeroFlag(zero_flag));
+//////////CPU registers
+wire [15:0] regA_out;
+CPU_Registers CPU_regs(.clk(clk),
+              .data_in(DATA_BUS),
+              .sel_in(),
+              .sel_out(),
+              .write_enable(),
+              .output_enable(),
+              .data_out(DATA_BUS),
+              .regA(regA_out));
 endmodule

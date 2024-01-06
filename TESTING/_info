@@ -21,10 +21,10 @@ n@a@l@u
 !s85 0
 !s101 -O0
 vControlUnit
-IM8[59hQ1`daeCBIVfDmci3
+I1f_FNB2K[H?MRamXcEg:a1
 VNCe9R99anLEoeJR<iNeD91
 Z4 dC:\Users\marca\Desktop\CPU
-w1704461230
+w1704496837
 8C:/Users/marca/Desktop/CPU/ControlUnit.v
 FC:/Users/marca/Desktop/CPU/ControlUnit.v
 L0 3
@@ -34,7 +34,7 @@ r1
 R2
 R3
 n@control@unit
-!s100 AIcj:<U<P8>Kl:Q5B>>@:2
+!s100 0k4FNo6@C>B2NMLAn51NC2
 !s85 0
 !s101 -O0
 vcounter
@@ -54,10 +54,10 @@ R3
 !s85 0
 !s101 -O0
 vCPU
-IWOj?_WRmBo2BLTQZoN=ET0
-VXI`4OR]K3JCe2J02eio[V0
+Ij:zI9LFz5`8:j`WSzh0mh3
+VZW9RhnRQcGz;>5ThZi[Z`2
 R4
-w1704464360
+w1704500805
 8C:/Users/marca/Desktop/CPU/CPU.v
 FC:/Users/marca/Desktop/CPU/CPU.v
 L0 1
@@ -67,17 +67,34 @@ r1
 R2
 R3
 n@c@p@u
-!s100 ;hoJ2YNZ@LI9_SKk=ZRlW3
+!s100 LcKgjTgUC47C?PZn2K;Po1
 !s85 0
 !s101 -O0
 vCPU_Registers
-!s100 E14jV0M]H<ISfCn]?zjag1
-IQbzjddUGR0:6e[QDhjPA63
-V^CKSS[z7dGOcC<AhZ@eN23
+IBFdhWTMiEaLF:8::=R2bH3
+VnhC>4F03mW2T;7Szlnj6<3
 R4
-w1704409080
+w1704499581
 8C:/Users/marca/Desktop/CPU/CPU_Registers.v
 FC:/Users/marca/Desktop/CPU/CPU_Registers.v
+L0 1
+R1
+r1
+31
+R2
+R3
+n@c@p@u_@registers
+!s100 0a4I0_1PcJQ_DLW2_CFbI1
+!s85 0
+!s101 -O0
+vmachine
+!s100 [5jNaze`@oKB`]>W?:jBA3
+IR>_mQL4gJ?GX=nMTago3N3
+VG59h:;nbjdFDD:0>=9kNd1
+R4
+w1704500891
+8C:/Users/marca/Desktop/CPU/BOARD.v
+FC:/Users/marca/Desktop/CPU/BOARD.v
 L0 1
 R1
 r1
@@ -86,7 +103,6 @@ r1
 !s101 -O0
 R2
 R3
-n@c@p@u_@registers
 vRAM
 I:C=QS;U>Si07WcXCc2_F53
 V[JXi_ek?[a4?<n5;h6bZh3

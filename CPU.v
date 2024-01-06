@@ -1,5 +1,5 @@
 module CPU(input wire clk,reset,
-           output wire [7:0] addr_bus,
+           output wire [7:0] d_addr_bus,i_addr_bus,
            inout wire [15:0]DATA_BUS,BUS);
 /*reg [7:0]FLAGS;
 initial 
@@ -37,4 +37,15 @@ ALU ALU_(.enable(),
          .SignFlag(sign_flag),
          .CFlag(carry_flag),
          .ZeroFlag(zero_flag));
+//////////CPU registers
+wire [15:0] regA_out;
+CPU_Registers CPU_regs(.clk(clk),
+              .data_in(DATA_BUS),
+              .sel_in(),
+              .sel_out(),
+              .write_enable(),
+              .output_enable(),
+              .data_out(DATA_BUS),
+              .regA(regA_out));
+
 endmodule

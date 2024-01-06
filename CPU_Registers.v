@@ -4,7 +4,7 @@ module CPU_Registers(input wire clk,
                      input wire [2:0]sel_out,
                      input wire write_enable,output_enable,
                      output wire [15:0]data_out,
-                     inout wire [15:0]regA,regB);
+                     inout wire [15:0]regA);
 reg[15:0] registers[0:7];
 //////only 8 cpu registers ,each 16bit long
   always @(posedge clk) begin
@@ -12,7 +12,7 @@ reg[15:0] registers[0:7];
         registers[sel_in]=data_in;
   end
   assign data_out=(output_enable)?registers[sel_out]:'bz;
-  wire [7:0] regC,regD,regE,regF,regG,regH;
+  wire [15:0] regC,regD,regE,regF,regG,regH;
   assign regA=registers[0];
   assign regB=registers[1];
   assign regC=registers[2];
