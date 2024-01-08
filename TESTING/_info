@@ -21,13 +21,30 @@ n@a@l@u
 !s85 0
 !s101 -O0
 vBOARD_tb
-!s100 6MFP?8]N97j_C?SlH_9Kn0
-IFBM]g^D3kVM625o=I0f^M0
+IKWYUm7Y[GMaaC;d^7]4b`0
 V8NODb:8IC9]jB5^V`UiW13
 Z4 dC:\Users\marca\Desktop\CPU
-w1704684985
+w1704736794
 8C:/Users/marca/Desktop/CPU/BOARD_tb.v
 FC:/Users/marca/Desktop/CPU/BOARD_tb.v
+L0 1
+R1
+r1
+31
+R2
+R3
+n@b@o@a@r@d_tb
+!s100 E<>DAO]QD5K31g[1j2NzA0
+!s85 0
+!s101 -O0
+vclock
+!s100 <0AN[U9lKOhH94CYb:_GU1
+IZGkk6:cd9KToAZ08^eIUl0
+V`@T8FCN3LgGF4F]MS6DoX3
+R4
+w1704705006
+8C:/Users/marca/Desktop/CPU/CLOCK.v
+FC:/Users/marca/Desktop/CPU/CLOCK.v
 L0 1
 R1
 r1
@@ -35,8 +52,7 @@ r1
 31
 !s101 -O0
 R2
-R3
-n@b@o@a@r@d_tb
+o-work work -nocovercells -O0
 vControlUnit
 IRTz<Ke:;M4c[oeP^gPR@=2
 VH1MjWf0ZN]67JUOVg8K`J0

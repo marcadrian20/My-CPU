@@ -1,9 +1,22 @@
 module BOARD_tb;
+wire clk;
+reg enable_clk=0;
 reg reset=0;
-
-reg clk;
+clock CLOCK(.enable(enable_clk),
+            .clk(clk));
+/*reg clk;
 initial begin clk = 1'b0;
 forever #50  clk = !clk;
+end
+*/
+initial begin 
+  reset=1;
+  #10 reset=0;
+  #10;
+  $readmemh("INSTRUCTION_RAM.txt",machine_test.I_MEM.Memory);
+  $readmemh("DATA_RAM.txt",machine_test.D_MEM.Memory);
+  #10 enable_clk=1;
+  #100 enable_clk=0;
 end
 machine machine_test(.clk(clk),
                      .reset(reset));
