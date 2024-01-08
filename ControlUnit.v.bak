@@ -1,14 +1,29 @@
 `include "InstructionSet.v"
 `include "MachineStates.v"
 module ControlUnit(input wire [15:0]instruction,
-                   input wire clk,reset_cycle,reset,
-                   output reg halted,
+                   input wire clk,reset_cycle,reset,CFLAG,ZFLAG,
+                   output reg halted,signal_PC,signal_PC_sel,signal_read_I_mem,
+                   output wire signal_read_D_mem,signal_write_mem,signal_IR,
+                   output wire signal_I_MAR,signal_D_MAR,signal_ALU,
+                   output wire[2:0]signal_CPU_REG_sel_IN,signal_CPU_REG_sel_OUT,
+                   output wire signal_CPU_REG_W,signal_CPU_REG_R,
                    output reg [2:0]cycle,
                    output reg [2:0] ADDRM,
                    output reg [3:0] state,
                    output reg [4:0] opcode);
-wire c_halt;
-/reg [3:0]state;
+wire signal_halt;
+/*wire signal_PC;
+wire signal_PC_sel;
+wire signal_read_I_mem,signal_read_D_mem;
+wire signal_write_mem;
+wire signal_IR;
+wire signal_I_MAR,signal_D_MAR;
+wire signal_ALU;
+wire [2:0]signal_CPU_REG_sel_IN,signal_CPU_REG_sel_OUT;
+wire signal_CPU_REG_W,signal_CPU_REG_R;
+*/
+wire jump_allowed;
+//reg [3:0]state;
 //////////////////////////        ___________Addressing modes____________________________
 localparam Immd_addr=3'b001;   //||Immediate: REG a<=NUMBER for ex: MOV A 5             ||
 localparam Reg_addr=3'b010;    //||Register mode: MOV A B                               ||
@@ -25,28 +40,58 @@ always @(posedge clk&~halted) begin///obv important to not be halted ;)))
   case(cycle)///FETCH-DECODE-EXECUTE
     `T1:state=`S_FETCH_PC;////FETCH STEP
     `T2:state=`S_FETCH_INST;////still on FETCH
-    /////////////NOW entering DECODE
+          /////////////NOW entering DECODE
     `T3:state=(opcode==`HLT)?`S_HALT:(opcode==`LDR||opcode==`MOV)?`S_MEM_R:
-    (opcode==`ADD||opcode==`SUB||opcode==`ADC||opcode==`INC||opcode==`DEC||opcode==`AND||
-    opcode==`OR||opcode==`XOR||opcode==`NOT)?`S_ALU_FETCH:(opcode==`LDI||opcode==`STR)?`S_MEM_W:
-    (opcode==`JMP||opcode==`JNZ||opcode==`JZ||opcode==`JC||opcode==`JNC)?`S_JMP:`S_NEXT;
-    
-    `T4:state=(opcode==`LDR||opcode==`MOV)?`S_MEM_W:
+        (opcode==`ADD||opcode==`SUB||opcode==`ADC||opcode==`INC||opcode==`DEC||opcode==`AND||
+        opcode==`OR||opcode==`XOR||opcode==`NOT)?`S_ALU_FETCH:(opcode==`LDI||opcode==`STR)?`S_MEM_W:
+        (opcode==`JMP||opcode==`JNZ||opcode==`JZ||opcode==`JC||opcode==`JNC)?`S_FETCH_PC:`S_NEXT;
+    ////////////DECODE AND SET PROPER STATES
+    /*`T4:state=(opcode==`LDR||opcode==`MOV)?`S_MEM_W:
     (opcode==`ADD||opcode==`SUB||opcode==`ADC||opcode==`INC||opcode==`DEC||opcode==`AND||
     opcode==`OR||opcode==`XOR||opcode==`NOT)?`S_ALU_OUT:
     (opcode==`JMP||opcode==`JNZ||opcode==`JZ||opcode==`JC||opcode==`JNC)?`S_FETCH_PC:`S_NEXT;
-    
+    */
+    `T4:state=(state==`S_MEM_R)?`S_MEM_W:
+              (state==`S_ALU_FETCH)?`S_ALU_OUT:
+              (state==`S_FETCH_PC)?`S_JMP:`S_NEXT;
+    ///FINAL STATES->finish writing to mem//
     `T5: state=`S_NEXT;
     endcase
-  cycle=(cycle>4)?0:cycle+1;//The state machine has 7/8 states(retarded states to be precise)
+  cycle=(cycle>4)?0:cycle+1;//The state machine has 4/5 states(retarded states to be precise)
 end
+///////////////////////SIGNALS///////////////////////// 
+///////////////////////////////////////////////////////
+  assign jump_allow=(opcode==`JMP|opcode==`JNZ&~ZFLAG|opcode==`JZ&ZFLAG|opcode==`JC&CFLAG|opcode==`JNC&~CFLAG); 
+  assign signal_halt=state==`S_HALT;
+  assign reset_cycle=state==`S_NEXT|reset;
+  //////////////PROGRAM COUNTER SIGNALS                                ______________________________________
+  assign signal_PC=state==`S_FETCH_PC|(state==`S_JMP&jump_allow);   //| HI->FETCH PC                        |
+  assign signal_PC_sel=(state==`S_JMP)&jump_allow;                  //| LO/HI->SEL MODE(NORMAL|JUMP to addr)|
+  assign signal_I_MAR=state==`S_FETCH_PC|(state==`S_JMP&jump_allow);//| HI->Write ADDR to MAR               |
+  //////////////INSTRUCTION FETCHING SPECIFIC SIGNALS            
+  assign signal_IR=state==`S_FETCH_INST;
+  assign signal_read_I_mem=state==`S_FETCH_INST|(state==`S_JMP&jump_allow);
+  /////////////ALU
+  assign signal_ALU=state==`S_ALU_FETCH;
+  
+  ////////////CPU REGISTER I/O LINE SELECT->IN^HI(MOV&ALU)||OUT^HI(MOV_regaddr&STR)
+  assign signal_CPU_REG_sel_IN=(opcode==`ADD|opcode==`SUB|opcode==`ADC|opcode==`INC|opcode==`DEC|opcode==`AND|
+        opcode==`OR|opcode==`XOR|opcode==`NOT|opcode==`LDR)?instruction[10:8]:(opcode==`MOV)?instruction[7:5]:'bx;
+  assign signal_CPU_REG_sel_OUT=(opcode==`MOV&&ADDRM==Reg_addr)?instruction[4:2]:(opcode==`STR)?instruction[10:8]:3'bx;
+  assign signal_CPU_REG_R=((state==`S_MEM_R)&(ADDRM==Reg_addr))|opcode==`STR;
+  assign signal_CPU_REG_W=state==`S_ALU_OUT|(state==`S_MEM_W&~(opcode==`STR));
+////////////////MEM I/O
+  assign signal_read_D_mem=state==`S_MEM_R;
+  assign signal_write_D_mem=(state==`S_MEM_W)&(opcode==`STR);
+/////////////
+
 /////////////////////Reseting on reset_cycle or reset command
 always @(posedge reset_cycle or posedge reset) begin//not necessarily good practice
     cycle=0;
     halted=0;
   end
 
-always @(posedge c_halt) begin
+always @(posedge signal_halt) begin
     halted=1;
     end
 endmodule

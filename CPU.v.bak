@@ -12,8 +12,10 @@ initial
 wire zero_flag;
 wire sign_flag;
 wire carry_flag;
+wire [2:0] FLAGS;
 ////////////Program counter
 wire [15:0] pc_out;//output wire from the instr pointer  
+
 counter PC(.SEL(),
           .clk(clk),
           .reset(reset),
@@ -27,6 +29,57 @@ register INST_REG(.st(),
                   .reset(reset),
                   .in(BUS),
                   .out(instr_reg_out));
+                  
+///////////Control Unit
+wire cpu_halted,reset_cycle;
+wire [2:0] m_cycle,ADDRM_;
+wire [3:0] cpu_state;
+wire [4:0] OPCODE;
+wire signal_PC;
+wire signal_PC_sel;
+wire signal_read_I_mem,signal_read_D_mem;
+wire signal_write_mem;
+wire signal_IR;
+wire signal_I_MAR,signal_D_MAR;
+wire signal_ALU;
+wire [2:0]signal_CPU_REG_sel_IN,signal_CPU_REG_sel_OUT;
+wire signal_CPU_REG_W,signal_CPU_REG_R;
+ControlUnit CU(.instruction(instr_reg_out),
+               .reset_cycle(reset_cycle),
+               .reset(reset),
+               .CFLAG(carry_flag),
+               .ZFLAG(zero_flag),
+               .halted(cpu_halted),
+               .signal_PC(signal_PC),
+               .signal_PC_sel(signal_PC_sel),
+               .signal_read_I_mem(signal_read_I_mem),
+               .signal_read_D_mem(signal_read_D_mem),
+               .signal_write_mem(signal_write_mem),
+               .signal_IR(signal_IR),
+               .signal_I_MAR(signal_I_MAR),
+               .signal_D_MAR(signal_D_MAR),
+               .signal_ALU(signal_ALU),
+               .signal_CPU_REG_sel_IN(signal_CPU_REG_sel_IN),
+               .signal_CPU_REG_sel_OUT(signal_CPU_REG_sel_OUT),
+               .signal_CPU_REG_W(),
+               .signal_CPU_REG_R(),
+               .cycle(m_cycle),
+               .ADDRM(ADDRM_),
+               .state(cpu_state),
+               .opcode(OPCODE));
+
+//////////INSTRUCTION MAR(memory address register)
+register INST_MAR(.st(),
+                  .clk(clk),
+                  .reset(reset),
+                  .in(BUS),
+                  .out(i_addr_bus));
+register DATA_MAR(.st(),
+                  .clk(clk),
+                  .reset(reset),
+                  .in(BUS),
+                  .out(d_addr_bus));
+//////////DATA MAR
 //////////CPU registers
 wire [15:0] regA_out;
 wire [2:0] CPU_REG_SEL_IN,CPU_REG_SEL_OUT;
@@ -50,18 +103,6 @@ ALU ALU_(.enable(),
          .SignFlag(sign_flag),
          .CFlag(carry_flag),
          .ZeroFlag(zero_flag));
-         
-///////////Control Unit
-wire cpu_halted,reset_cycle;
-wire [2:0] m_cycle,ADDRM_;
-wire [3:0] cpu_state;
-wire [4:0] OPCODE;
-ControlUnit CU(.instruction(instr_reg_out),
-               .reset_cycle(reset_cycle),
-               .reset(reset),
-               .halted(cpu_halted),
-               .cycle(m_cycle),
-               .ADDRM(ADDRM_),
-               .state(cpu_state),
-               .opcode(OPCODE));
+//assign FLAGS={sign_flag,zero_flag,carry_flag};
+
 endmodule

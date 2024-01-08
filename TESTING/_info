@@ -21,10 +21,10 @@ n@a@l@u
 !s85 0
 !s101 -O0
 vControlUnit
-IW3_a?jnIk7KEl;F`5IfQi1
-V8<DH=EaaVTTdTiNRJn]@d3
+IWND?idLLnOE;zjW:g;_TV2
+VbFzdTigkQb:K;?T6@_V[40
 Z4 dC:\Users\marca\Desktop\CPU
-w1704528690
+w1704679641
 8C:/Users/marca/Desktop/CPU/ControlUnit.v
 FC:/Users/marca/Desktop/CPU/ControlUnit.v
 L0 3
@@ -34,7 +34,7 @@ r1
 R2
 R3
 n@control@unit
-!s100 EQB]D6;^OdI3;BLZhonV^0
+!s100 a<A?ijY5H<5F2YRUzUV<c1
 !s85 0
 !s101 -O0
 vcounter
@@ -54,10 +54,10 @@ R3
 !s85 0
 !s101 -O0
 vCPU
-IHVV9YGL^b^dE[bn6gXnT70
+Ih23Co7zH^3[84<e?8Wzg61
 VhzhkQg4h8126U@VOh;b502
 R4
-w1704528854
+w1704679948
 8C:/Users/marca/Desktop/CPU/CPU.v
 FC:/Users/marca/Desktop/CPU/CPU.v
 L0 1
@@ -67,7 +67,7 @@ r1
 R2
 R3
 n@c@p@u
-!s100 R<dhGU9dK4W8RDKYY5M1O0
+!s100 jaEom_f9SdXUDWmfgN2AN0
 !s85 0
 !s101 -O0
 vCPU_Registers
