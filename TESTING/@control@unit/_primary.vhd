@@ -13,7 +13,7 @@ entity ControlUnit is
         signal_PC_sel   : out    vl_logic;
         signal_read_I_mem: out    vl_logic;
         signal_read_D_mem: out    vl_logic;
-        signal_write_mem: out    vl_logic;
+        signal_write_D_mem: out    vl_logic;
         signal_IR       : out    vl_logic;
         signal_I_MAR    : out    vl_logic;
         signal_D_MAR    : out    vl_logic;
@@ -22,6 +22,8 @@ entity ControlUnit is
         signal_CPU_REG_sel_OUT: out    vl_logic_vector(2 downto 0);
         signal_CPU_REG_W: out    vl_logic;
         signal_CPU_REG_R: out    vl_logic;
+        signal_ALU_tristate: out    vl_logic;
+        DMAR_bus        : out    vl_logic_vector(7 downto 0);
         cycle           : out    vl_logic_vector(2 downto 0);
         ADDRM           : out    vl_logic_vector(2 downto 0);
         state           : out    vl_logic_vector(3 downto 0);

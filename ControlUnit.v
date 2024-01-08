@@ -4,14 +4,16 @@ module ControlUnit(input wire [15:0]instruction,
                    input wire clk,reset_cycle,reset,CFLAG,ZFLAG,
                    output reg halted,
                    output wire signal_PC,signal_PC_sel,signal_read_I_mem,
-                   output wire signal_read_D_mem,signal_write_mem,signal_IR,
+                   output wire signal_read_D_mem,signal_write_D_mem,signal_IR,
                    output wire signal_I_MAR,signal_D_MAR,signal_ALU,
                    output wire[2:0]signal_CPU_REG_sel_IN,signal_CPU_REG_sel_OUT,
                    output wire signal_CPU_REG_W,signal_CPU_REG_R,
+                   output wire signal_ALU_tristate,
+                   output wire [7:0] DMAR_bus,
                    output reg [2:0]cycle,
-                   output reg [2:0] ADDRM,
+                   output wire [2:0] ADDRM,
                    output reg [3:0] state,
-                   output reg [4:0] opcode);
+                   output wire [4:0] opcode);
 wire signal_halt;
 /*wire signal_PC;
 wire signal_PC_sel;
@@ -34,10 +36,10 @@ initial begin
   cycle=0;///On cpu start the CPU cant be halted
   halted=0;//Nor have performed any cycle
 end
-
+assign opcode=instruction[15:11];
+assign ADDRM=(opcode==`MOV)?instruction[10:8]:3'b0;//Addressing modes
 always @(posedge clk&~halted) begin///obv important to not be halted ;)))
-  opcode=instruction[15:11];///I dont like assigning it either each clock
-  ADDRM=(opcode==`MOV)?instruction[10:8]:3'b0;//Addressing modes
+  ///I dont like assigning it either each clock
   case(cycle)///FETCH-DECODE-EXECUTE
     `T1:state=`S_FETCH_PC;////FETCH STEP
     `T2:state=`S_FETCH_INST;////still on FETCH
@@ -74,7 +76,7 @@ end
   assign signal_read_I_mem=state==`S_FETCH_INST|(state==`S_JMP&jump_allow);
   /////////////ALU
   assign signal_ALU=state==`S_ALU_FETCH;
-  
+  assign signal_ALU_tristate=state==`S_ALU_OUT;
   ////////////CPU REGISTER I/O LINE SELECT->IN^HI(MOV&ALU)||OUT^HI(MOV_regaddr&STR)
   assign signal_CPU_REG_sel_IN=(opcode==`ADD|opcode==`SUB|opcode==`ADC|opcode==`INC|opcode==`DEC|opcode==`AND|
         opcode==`OR|opcode==`XOR|opcode==`NOT|opcode==`LDR)?instruction[10:8]:(opcode==`MOV)?instruction[7:5]:'bx;
@@ -84,6 +86,7 @@ end
 ////////////////MEM I/O
   assign signal_read_D_mem=state==`S_MEM_R;
   assign signal_write_D_mem=(state==`S_MEM_W)&(opcode==`STR);
+  assign DMAR_bus=(opcode==`MOV&&ADDRM==Dir_addr)?instruction[4:0]:(opcode==`LDR||opcode==`STR)?instruction[7:0]:DMAR_bus;
 /////////////
 
 /////////////////////Reseting on reset_cycle or reset command

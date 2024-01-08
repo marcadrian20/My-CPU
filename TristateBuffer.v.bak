@@ -1,0 +1,3 @@
+module TristateBuffer(input [15:0]in,
+                      input enable,
+                      output [15:0]out);

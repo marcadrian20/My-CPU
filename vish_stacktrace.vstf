@@ -1,0 +1,66 @@
+# Current time Mon Jan 08 06:08:44 2024
+# ModelSim Stack Trace
+# Program = vish
+# Id = "6.5b"
+# Version = "2009.10"
+# Date = "Oct  1 2009"
+# Platform = win32pe
+
+Exception c0000005 has occurred at address 0048ceed. Traceback:
+# 0    0x0048ceed: 'Mtirpc_Init + 0x2483d'
+# 1    0x0044b9f7: '<unknown (@0x44b9f7)>'
+# 2    0x100583ea: 'TclServiceIdle + 0x4a'
+# 3    0x1004b834: 'Tcl_DoOneEvent + 0x124'
+# 4    0x1002bd68: 'Tcl_VwaitObjCmd + 0x78'
+# 5    0x1000d52b: 'TclEvalObjvInternal + 0x24b'
+# 6    0x1002cad7: 'TclCompEvalObj + 0x637'
+# 7    0x1002c590: 'TclCompEvalObj + 0xf0'
+# 8    0x1005383a: 'TclObjInterpProc + 0x26a'
+# 9    0x1000d52b: 'TclEvalObjvInternal + 0x24b'
+# 10   0x1000dce0: 'Tcl_EvalEx + 0x180'
+# 11   0x1000e328: 'Tcl_EvalObjEx + 0x228'
+# 12   0x10011ebc: 'Tcl_EvalObjCmd + 0x6c'
+# 13   0x1000d52b: 'TclEvalObjvInternal + 0x24b'
+# 14   0x1002cad7: 'TclCompEvalObj + 0x637'
+# 15   0x1002c590: 'TclCompEvalObj + 0xf0'
+# 16   0x1005383a: 'TclObjInterpProc + 0x26a'
+# 17   0x1000d52b: 'TclEvalObjvInternal + 0x24b'
+# 18   0x1000dce0: 'Tcl_EvalEx + 0x180'
+# 19   0x1000e066: 'Tcl_Eval + 0x16'
+# 20   0x1000f31c: 'Tcl_GlobalEval + 0x1c'
+# 21   0x00474c87: 'Mtirpc_Init + 0xc5d7'
+# 22   0x1000c74b: 'TclInvokeStringCommand + 0x6b'
+# 23   0x1000d52b: 'TclEvalObjvInternal + 0x24b'
+# 24   0x1000dce0: 'Tcl_EvalEx + 0x180'
+# 25   0x1000e066: 'Tcl_Eval + 0x16'
+# 26   0x1000f31c: 'Tcl_GlobalEval + 0x1c'
+# 27   0x00474a62: 'Mtirpc_Init + 0xc3b2'
+# 28   0x1000c74b: 'TclInvokeStringCommand + 0x6b'
+# 29   0x1000d52b: 'TclEvalObjvInternal + 0x24b'
+# 30   0x1002cad7: 'TclCompEvalObj + 0x637'
+# 31   0x1002c590: 'TclCompEvalObj + 0xf0'
+# 32   0x1005383a: 'TclObjInterpProc + 0x26a'
+# 33   0x1000d52b: 'TclEvalObjvInternal + 0x24b'
+# 34   0x1002cad7: 'TclCompEvalObj + 0x637'
+# 35   0x1002c590: 'TclCompEvalObj + 0xf0'
+# 36   0x1005383a: 'TclObjInterpProc + 0x26a'
+# 37   0x1000d52b: 'TclEvalObjvInternal + 0x24b'
+# 38   0x1002cad7: 'TclCompEvalObj + 0x637'
+# 39   0x1002c590: 'TclCompEvalObj + 0xf0'
+# 40   0x1000e159: 'Tcl_EvalObjEx + 0x59'
+# 41   0x10014334: 'Tcl_IfObjCmd + 0x194'
+# 42   0x1000d52b: 'TclEvalObjvInternal + 0x24b'
+# 43   0x1000dce0: 'Tcl_EvalEx + 0x180'
+# 44   0x100589a4: 'Tcl_AfterObjCmd + 0x574'
+# 45   0x100583ea: 'TclServiceIdle + 0x4a'
+# 46   0x1004b834: 'Tcl_DoOneEvent + 0x124'
+# 47   0x10262466: 'Tk_MainLoop + 0x16'
+# 48   0x004786e4: 'Mtirpc_Init + 0x10034'
+# 49   0x0047992d: 'Mtirpc_Init + 0x1127d'
+# 50   0x006a6963: '<unknown (@0x6a6963)>'
+# 51   0x7677fcc9: '<unknown (@0x7677fcc9)>'
+# 52   0x77a37c6e: '<unknown (@0x77a37c6e)>'
+# 53   0x77a37c3e: '<unknown (@0x77a37c3e)>'
+StackWalk failed 487
+# End of Stack Trace
+

@@ -1,23 +1,16 @@
-C:/Users/marca/Desktop/CPU/BOARD.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/BOARD.v
+C:/Users/marca/Desktop/CPU/Register.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/Register.v
+Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
+-- Compiling module register
+
+Top level modules:
+	register
+
+} {} {}} C:/Users/marca/Desktop/CPU/BOARD.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/BOARD.v
 Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
 -- Compiling module machine
 
 Top level modules:
 	machine
-
-} {} {}} C:/Users/marca/Desktop/CPU/RAM.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/RAM.v
-Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
--- Compiling module RAM
-
-Top level modules:
-	RAM
-
-} {} {}} C:/Users/marca/Desktop/CPU/ProgramCounter.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/ProgramCounter.v
-Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
--- Compiling module counter
-
-Top level modules:
-	counter
 
 } {} {}} C:/Users/marca/Desktop/CPU/ControlUnit.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/ControlUnit.v
 Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
@@ -26,19 +19,6 @@ Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
 Top level modules:
 	ControlUnit
 
-} {} {}} C:/Users/marca/Desktop/CPU/MachineStates.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/MachineStates.v
-Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
-
-} {} {}} C:/Users/marca/Desktop/CPU/Register.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/Register.v
-Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
--- Compiling module register
-
-Top level modules:
-	register
-
-} {} {}} C:/Users/marca/Desktop/CPU/InstructionSet.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/InstructionSet.v
-Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
-
 } {} {}} C:/Users/marca/Desktop/CPU/ALU.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/ALU.v
 Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
 -- Compiling module ALU
@@ -46,11 +26,52 @@ Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
 Top level modules:
 	ALU
 
+} {} {}} C:/Users/marca/Desktop/CPU/BOARD_tb.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/BOARD_tb.v
+Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
+-- Compiling module BOARD_tb
+
+Top level modules:
+	BOARD_tb
+
+} {} {}} C:/Users/marca/Desktop/CPU/InstructionSet.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/InstructionSet.v
+Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
+
 } {} {}} C:/Users/marca/Desktop/CPU/CPU_Registers.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/CPU_Registers.v
 Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
 -- Compiling module CPU_Registers
 
 Top level modules:
 	CPU_Registers
+
+} {} {}} C:/Users/marca/Desktop/CPU/CPU.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/CPU.v
+Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
+-- Compiling module CPU
+
+Top level modules:
+	CPU
+
+} {} {}} C:/Users/marca/Desktop/CPU/ProgramCounter.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/ProgramCounter.v
+Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
+-- Compiling module counter
+
+Top level modules:
+	counter
+
+} {} {}} C:/Users/marca/Desktop/CPU/RAM.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/RAM.v
+Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
+-- Compiling module RAM
+
+Top level modules:
+	RAM
+
+} {} {}} C:/Users/marca/Desktop/CPU/MachineStates.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/MachineStates.v
+Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
+
+} {} {}} C:/Users/marca/Desktop/CPU/TristateBuffer.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/TristateBuffer.v
+Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
+-- Compiling module TristateBuffer
+
+Top level modules:
+	TristateBuffer
 
 } {} {}}
