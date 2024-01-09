@@ -4,11 +4,11 @@ entity ControlUnit is
     port(
         instruction     : in     vl_logic_vector(15 downto 0);
         clk             : in     vl_logic;
-        reset_cycle     : in     vl_logic;
         reset           : in     vl_logic;
         CFLAG           : in     vl_logic;
         ZFLAG           : in     vl_logic;
         halted          : out    vl_logic;
+        mux_switch      : out    vl_logic;
         signal_PC       : out    vl_logic;
         signal_PC_sel   : out    vl_logic;
         signal_read_I_mem: out    vl_logic;

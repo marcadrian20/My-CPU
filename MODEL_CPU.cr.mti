@@ -26,6 +26,13 @@ Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
 Top level modules:
 	ALU
 
+} {} {}} C:/Users/marca/Desktop/CPU/Multiplexer.v {1 {vlog -work work -nocovercells C:/Users/marca/Desktop/CPU/Multiplexer.v
+Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
+-- Compiling module Multiplexer
+
+Top level modules:
+	Multiplexer
+
 } {} {}} C:/Users/marca/Desktop/CPU/CLOCK.v {1 {vlog -work work -nocovercells C:/Users/marca/Desktop/CPU/CLOCK.v
 Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
 -- Compiling module clock

@@ -9,6 +9,7 @@ entity CPU is
         signal_read_I_mem: out    vl_logic;
         signal_read_D_mem: out    vl_logic;
         signal_write_D_mem: out    vl_logic;
+        mem_clk         : out    vl_logic;
         DATA_BUS        : inout  vl_logic_vector(15 downto 0);
         \BUS\           : inout  vl_logic_vector(15 downto 0)
     );

@@ -2,6 +2,7 @@ module CPU(input wire clk,reset,
            output wire [7:0] d_addr_bus,i_addr_bus,
            output wire signal_read_I_mem,signal_read_D_mem,
            output wire signal_write_D_mem,
+           output reg mem_clk,
            inout wire [15:0]DATA_BUS,BUS);
 /*reg [7:0]FLAGS;
 initial 
@@ -13,8 +14,8 @@ initial
 wire zero_flag;
 wire sign_flag;
 wire carry_flag;
-wire [2:0] FLAGS;
-wire cpu_halted,reset_cycle;
+//wire [2:0] FLAGS;
+wire cpu_halted;
 wire [2:0] m_cycle,ADDRM_;
 wire [3:0] cpu_state;
 wire [4:0] OPCODE;
@@ -27,29 +28,44 @@ wire signal_I_MAR,signal_D_MAR;
 wire signal_ALU;
 wire [2:0]signal_CPU_REG_sel_IN,signal_CPU_REG_sel_OUT;
 wire signal_CPU_REG_W,signal_CPU_REG_R;
-wire [15:0] pc_out;//output wire from the instr pointer  
+wire [7:0] pc_out;//output wire from the instr pointer  
 wire [7:0] DMAR_bus;
-wire signal_ALU_tristate;
+wire signal_ALU_tristate,mux_switch;
+/////////////////////////////////////
+ reg cycle_clk = 0;
+  reg internal_clk = 0;
+  reg [2:0] cnt = 'b100;
+  reg halted = 0;
+  always @ (posedge clk & ~halted) begin
+    {cycle_clk, mem_clk, internal_clk} <= cnt;
+
+    case (cnt)
+      'b100 : cnt = 'b010;
+      'b010 : cnt = 'b001;
+      'b001 : cnt = 'b100;
+    endcase
+  end
 //////////////Instruction reg
 wire [15:0] instr_reg_out;
 register INST_REG(.st(signal_IR),
-                  .clk(clk),
+                  .clk(internal_clk),
                   .reset(reset),
                   .in(BUS),
                   .out(instr_reg_out));
                   
 ///////////Control Unit
-ControlUnit CU(.instruction(instr_reg_out),
-               .reset_cycle(reset_cycle),
+ControlUnit CU(.clk(cycle_clk),
+               .instruction(instr_reg_out),
                .reset(reset),
                .CFLAG(carry_flag),
                .ZFLAG(zero_flag),
                .halted(cpu_halted),
+               .mux_switch(mux_switch),
                .signal_PC(signal_PC),
                .signal_PC_sel(signal_PC_sel),
                .signal_read_I_mem(signal_read_I_mem),
                .signal_read_D_mem(signal_read_D_mem),
-               .signal_write_D_mem(signal_write_mem),
+               .signal_write_D_mem(signal_write_D_mem),
                .signal_IR(signal_IR),
                .signal_I_MAR(signal_I_MAR),
                .signal_D_MAR(signal_D_MAR),
@@ -67,44 +83,54 @@ ControlUnit CU(.instruction(instr_reg_out),
                
 ////////////Program counter
 counter PC(.SEL(signal_PC_sel),
-          .clk(clk&signal_PC),
+          .clk(internal_clk&signal_PC),
           .reset(reset),
           .DEC(1'b0),
-          .in(BUS),
+          .in(BUS[7:0]),
           .out(pc_out));
 
 
 //////////INSTRUCTION MAR(memory address register)
-register INST_MAR(.st(signal_I_MAR),
-                  .clk(clk),
+register #(.BitCount(8)) INST_MAR(.st(signal_I_MAR),
+                  .clk(internal_clk),
                   .reset(reset),
-                  .in(BUS),
+                  .in(pc_out),
                   .out(i_addr_bus));
-register DATA_MAR(.st(signal_D_MAR),
+register #(.BitCount(8)) DATA_MAR(.st(signal_D_MAR),
                   .clk(clk),
                   .reset(reset),
-                  .in(BUS),
+                  .in(DMAR_bus),
                   .out(d_addr_bus));
 //////////DATA MAR^^^^
+//////////////////MULTIPLEXER DATA_BUSxBUS
+wire [15:0]mux_out;
+Multiplexer mux(.SEL_LINE(mux_switch),
+                        .in_a({5'b0,instr_reg_out[10:0]}),
+                        .in_b(DATA_BUS),
+                        .out(mux_out));
 //////////CPU registers
 wire [15:0] regA_out;
-
-wire [2:0] CPU_REG_SEL_IN,CPU_REG_SEL_OUT;
-CPU_Registers CPU_regs(.clk(clk),
-              .data_in(DATA_BUS),
-              .sel_in(CPU_REG_SEL_IN),
-              .sel_out(CPU_REG_SEL_OUT),
+CPU_Registers CPU_regs(.clk(internal_clk),
+              .data_in(mux_out),
+              .sel_in(signal_CPU_REG_sel_IN),
+              .sel_out(signal_CPU_REG_sel_OUT),
               .write_enable(signal_CPU_REG_W),
               .output_enable(signal_CPU_REG_R),
               .data_out(DATA_BUS),
               .regA(regA_out));
-
+////////////////ACC
+wire [15:0] ACC_wire;
+register #(.BitCount(16)) ACC(.st(signal_ALU),
+        	 	 	                 .clk(clk),
+        	 	 	                 .reset(reset),
+        	 	 	                 .in(DATA_BUS),
+        	 	 	                 .out(ACC_wire));
 ////////////////ALU
 wire [15:0] ALU_out;
 ALU ALU_(.enable(signal_ALU),
-         .clk(clk),
+         .clk(mem_clk),//internal_clk),
          .OPCODE(OPCODE),
-         .in_a(regA_out),
+         .in_a(ACC_wire),
          .in_b(DATA_BUS),
          .out(ALU_out),
          .SignFlag(sign_flag),
@@ -112,6 +138,6 @@ ALU ALU_(.enable(signal_ALU),
          .ZeroFlag(zero_flag));
 //assign FLAGS={sign_flag,zero_flag,carry_flag};
 TristateBuffer ALU_tristate(.in(ALU_out),
-                            .enable(signal_ALU_tristate),
-                            .out(DATA_BUS));
+                           .enable(signal_ALU_tristate),
+                           .out(DATA_BUS));//(DATA_BUS));
 endmodule

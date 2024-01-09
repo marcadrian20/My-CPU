@@ -12,7 +12,7 @@ reg[15:0] registers[0:7];
         registers[sel_in]=data_in;
   end
   assign data_out=(output_enable)?registers[sel_out]:'bz;
-  wire [15:0] regC,regD,regE,regF,regG,regH;
+  wire [15:0] regB,regC,regD,regE,regF,regG,regH;
   assign regA=registers[0];
   assign regB=registers[1];
   assign regC=registers[2];

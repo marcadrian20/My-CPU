@@ -22,7 +22,7 @@ module ALU(input wire enable,clk,
       `XOR:Buffer=in_a^in_b;
       `NOT:Buffer=~in_a;
       endcase
-      
+    
     ZeroFlag=(Buffer==0)?1:0;
     SignFlag=(Buffer<0)?1:0;
     end

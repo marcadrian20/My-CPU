@@ -1,7 +1,8 @@
 module machine(input wire clk,
                input wire reset);
 
-wire [7:0] d_addr_bus,i_addr_bus,DATA_BUS,BUS;
+wire [7:0] d_addr_bus,i_addr_bus;
+wire [15:0]DATA_BUS,BUS;
 wire signal_read_I_mem,signal_read_D_mem,signal_write_D_mem;
            
 CPU CPU_(.clk(clk),
@@ -14,13 +15,13 @@ CPU CPU_(.clk(clk),
          .DATA_BUS(DATA_BUS),
          .BUS(BUS));
 //wire I_MEM_W,I_MEM_OE;
-RAM I_MEM(.st(1'b1),
+RAM I_MEM(.st(1'b0),
           .oe(signal_read_I_mem),
           .clk(clk),
           .reset(reset),
           .addr(i_addr_bus),
           .data(BUS));
-RAM D_MEM(.st(signal_write_I_mem),
+RAM D_MEM(.st(signal_write_D_mem),
           .clk(clk),
           .oe(signal_read_D_mem),
           .reset(reset),

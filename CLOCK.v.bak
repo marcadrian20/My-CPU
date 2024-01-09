@@ -3,9 +3,9 @@ module clock(
   output reg clk = 0);
 
   always begin
-    #5 clk = ~clk & enable;
+    #10 clk = ~clk & enable;
   end
 
-  assign clk_inv = ~clk;
+  //assign clk_inv = ~clk;
 
 endmodule

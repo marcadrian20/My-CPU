@@ -1,5 +1,5 @@
 module counter
-#(parameter BitCount=16)
+#(parameter BitCount=8)
 (input SEL,clk,reset,DEC,
  input [BitCount-1:0] in,
  output reg [BitCount-1:0] out);

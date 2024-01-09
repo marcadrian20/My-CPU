@@ -11,6 +11,6 @@ module register
  end
  always @(posedge reset) begin
     if(reset)
-      out<=16'b0;
+      out<={BitCount{1'b0}};
  end
  endmodule

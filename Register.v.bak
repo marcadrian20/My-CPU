@@ -9,4 +9,8 @@ module register
    if(st)
      out<=in;
  end
+ always @(posedge reset) begin
+    if(reset)
+      out<='bz;//{BitCount{1'b0}};
+ end
  endmodule

@@ -2,7 +2,7 @@ library verilog;
 use verilog.vl_types.all;
 entity counter is
     generic(
-        BitCount        : integer := 16
+        BitCount        : integer := 8
     );
     port(
         SEL             : in     vl_logic;
