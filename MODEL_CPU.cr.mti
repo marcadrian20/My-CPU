@@ -47,9 +47,6 @@ Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
 Top level modules:
 	BOARD_tb
 
-} {} {}} C:/Users/marca/Desktop/CPU/InstructionSet.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/InstructionSet.v
-Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
-
 } {} {}} C:/Users/marca/Desktop/CPU/CPU_Registers.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/CPU_Registers.v
 Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
 -- Compiling module CPU_Registers

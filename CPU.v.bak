@@ -120,15 +120,22 @@ CPU_Registers CPU_regs(.clk(internal_clk),
               .regA(regA_out));
 ////////////////ACC
 wire [15:0] ACC_wire;
+//wire [15:0] TMP_wire;
 register #(.BitCount(16)) ACC(.st(signal_ALU),
         	 	 	                 .clk(clk),
         	 	 	                 .reset(reset),
         	 	 	                 .in(DATA_BUS),
         	 	 	                 .out(ACC_wire));
+/*register #(.BitCount(16)) TMP(.st(signal_ALU_tristate),
+                              .clk(clk),
+                              .reset(reset),
+                              .in(DATA_BUS),
+                              .out(TMP_wire));	 	 	                 
+                              */
 ////////////////ALU
 wire [15:0] ALU_out;
 ALU ALU_(.enable(signal_ALU),
-         .clk(mem_clk),//internal_clk),
+         .clk(cycle_clk),
          .OPCODE(OPCODE),
          .in_a(ACC_wire),
          .in_b(DATA_BUS),

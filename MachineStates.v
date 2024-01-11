@@ -14,3 +14,4 @@
 `define T3 3'b010
 `define T4 3'b011
 `define T5 3'b100
+`define T6 3'b101

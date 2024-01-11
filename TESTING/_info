@@ -54,10 +54,10 @@ Z5 o-work work -nocovercells -O0
 !s85 0
 !s101 -O0
 vControlUnit
-I[`JOjKn2[DCCanQb2X<VM3
+I??iBFQCbnjPcCiY;RWh5]2
 VRhe6C3fJ[egjc`EM:WVQn2
 R4
-w1704838933
+w1704939022
 8C:/Users/marca/Desktop/CPU/ControlUnit.v
 FC:/Users/marca/Desktop/CPU/ControlUnit.v
 L0 3
@@ -67,7 +67,7 @@ r1
 R2
 R3
 n@control@unit
-!s100 1PXA>I0JYEicQB2<28eNM0
+!s100 V8`L2kajcK>ibzC?:M=jD0
 !s85 0
 !s101 -O0
 vcounter
@@ -87,10 +87,10 @@ R3
 !s85 0
 !s101 -O0
 vCPU
-IEX[>:_GE7R1]W>J@ARcM81
+INb:LbIP=c[9foe:znb?GA2
 VaGWGiRTFiLZIoBBdTRb5b0
 R4
-w1704841834
+w1704938565
 8C:/Users/marca/Desktop/CPU/CPU.v
 FC:/Users/marca/Desktop/CPU/CPU.v
 L0 1
@@ -100,7 +100,7 @@ r1
 R2
 R3
 n@c@p@u
-!s100 nP689?[32A6afOH]Em:i13
+!s100 e<N[@eca9c7?kn5`8N47I3
 !s85 0
 !s101 -O0
 vCPU_Registers

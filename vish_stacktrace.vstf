@@ -64,3 +64,31 @@ Exception c0000005 has occurred at address 0048ceed. Traceback:
 StackWalk failed 487
 # End of Stack Trace
 
+# Current time Wed Jan 10 02:31:59 2024
+# ModelSim Stack Trace
+# Program = vish
+# Id = "6.5b"
+# Version = "2009.10"
+# Date = "Oct  1 2009"
+# Platform = win32pe
+
+Exception c0000005 has occurred at address 00561a1a. Traceback:
+# 0    0x00561a1a: '<unknown (@0x561a1a)>'
+# 1    0x005046b0: 'Mtirpc_Init + 0x9c000'
+# 2    0x004f3cbf: 'Mtirpc_Init + 0x8b60f'
+# 3    0x0049d5e7: 'Mtirpc_Init + 0x34f37'
+# 4    0x004eb680: 'Mtirpc_Init + 0x82fd0'
+# 5    0x004eb631: 'Mtirpc_Init + 0x82f81'
+# 6    0x004eaed1: 'Mtirpc_Init + 0x82821'
+# 7    0x100583ea: 'TclServiceIdle + 0x4a'
+# 8    0x1004b834: 'Tcl_DoOneEvent + 0x124'
+# 9    0x10262466: 'Tk_MainLoop + 0x16'
+# 10   0x004786e4: 'Mtirpc_Init + 0x10034'
+# 11   0x0047992d: 'Mtirpc_Init + 0x1127d'
+# 12   0x006a6963: '<unknown (@0x6a6963)>'
+# 13   0x7748fcc9: '<unknown (@0x7748fcc9)>'
+# 14   0x77687c6e: '<unknown (@0x77687c6e)>'
+# 15   0x77687c3e: '<unknown (@0x77687c3e)>'
+StackWalk failed 487
+# End of Stack Trace
+
