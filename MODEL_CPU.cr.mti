@@ -19,13 +19,6 @@ Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
 Top level modules:
 	ControlUnit
 
-} {} {}} C:/Users/marca/Desktop/CPU/ALU.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/ALU.v
-Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
--- Compiling module ALU
-
-Top level modules:
-	ALU
-
 } {} {}} C:/Users/marca/Desktop/CPU/Multiplexer.v {1 {vlog -work work -nocovercells C:/Users/marca/Desktop/CPU/Multiplexer.v
 Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
 -- Compiling module Multiplexer
@@ -47,12 +40,15 @@ Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
 Top level modules:
 	BOARD_tb
 
+} {} {}} C:/Users/marca/Desktop/CPU/InstructionSet.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/InstructionSet.v
+Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
+
 } {} {}} C:/Users/marca/Desktop/CPU/CPU_Registers.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/CPU_Registers.v
 Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009
--- Compiling module CPU_Registers
+-- Compiling module CPU_Registers_2OUT
 
 Top level modules:
-	CPU_Registers
+	CPU_Registers_2OUT
 
 } {} {}} C:/Users/marca/Desktop/CPU/CPU.v {1 {vlog -work TESTING -nocovercells C:/Users/marca/Desktop/CPU/CPU.v
 Model Technology ModelSim ALTERA vlog 6.5b Compiler 2009.10 Oct  1 2009

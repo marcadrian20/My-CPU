@@ -26,7 +26,7 @@ wire signal_PC_sel;
 wire signal_IR;
 wire signal_I_MAR,signal_D_MAR;
 wire signal_ALU;
-wire [2:0]signal_CPU_REG_sel_IN,signal_CPU_REG_sel_OUT;
+wire [2:0]signal_CPU_REG_sel_IN,signal_CPU_REG_sel_OUT,signal_CPU_REG_sel_OUT2;
 wire signal_CPU_REG_W,signal_CPU_REG_R;
 wire [7:0] pc_out;//output wire from the instr pointer  
 wire [7:0] DMAR_bus;
@@ -72,6 +72,7 @@ ControlUnit CU(.clk(cycle_clk),
                .signal_ALU(signal_ALU),
                .signal_CPU_REG_sel_IN(signal_CPU_REG_sel_IN),
                .signal_CPU_REG_sel_OUT(signal_CPU_REG_sel_OUT),
+               .signal_CPU_REG_sel_OUT2(signal_CPU_REG_sel_OUT2),
                .signal_CPU_REG_W(signal_CPU_REG_W),
                .signal_CPU_REG_R(signal_CPU_REG_R),
                .signal_ALU_tristate(signal_ALU_tristate),
@@ -109,24 +110,26 @@ Multiplexer mux(.SEL_LINE(mux_switch),
                         .in_b(DATA_BUS),
                         .out(mux_out));
 //////////CPU registers
-wire [15:0] regA_out;
-CPU_Registers CPU_regs(.clk(internal_clk),
+//wire [15:0] regA_out;
+wire [15:0] ALU_IN_BUS;
+CPU_Registers_2OUT CPU_regs(.clk(internal_clk),
               .data_in(mux_out),
               .sel_in(signal_CPU_REG_sel_IN),
               .sel_out(signal_CPU_REG_sel_OUT),
+              .sel_out2(signal_CPU_REG_sel_OUT2),
               .write_enable(signal_CPU_REG_W),
               .output_enable(signal_CPU_REG_R),
               .data_out(DATA_BUS),
-              .regA(regA_out));
+              .data_out2(ALU_IN_BUS)
+              );
 ////////////////ACC
-wire [15:0] ACC_wire;
 //wire [15:0] TMP_wire;
-register #(.BitCount(16)) ACC(.st(signal_ALU),
+/*register #(.BitCount(16)) ACC(.st(signal_ALU),
         	 	 	                 .clk(clk),
         	 	 	                 .reset(reset),
         	 	 	                 .in(DATA_BUS),
         	 	 	                 .out(ACC_wire));
-/*register #(.BitCount(16)) TMP(.st(signal_ALU_tristate),
+register #(.BitCount(16)) TMP(.st(signal_ALU_tristate),
                               .clk(clk),
                               .reset(reset),
                               .in(DATA_BUS),
@@ -137,8 +140,8 @@ wire [15:0] ALU_out;
 ALU ALU_(.enable(signal_ALU),
          .clk(cycle_clk),
          .OPCODE(OPCODE),
-         .in_a(ACC_wire),
-         .in_b(regA_out),
+         .in_a(DATA_BUS),
+         .in_b(ALU_IN_BUS),
          .out(ALU_out),
          .SignFlag(sign_flag),
          .CFlag(carry_flag),

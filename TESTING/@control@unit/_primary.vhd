@@ -20,6 +20,7 @@ entity ControlUnit is
         signal_ALU      : out    vl_logic;
         signal_CPU_REG_sel_IN: out    vl_logic_vector(2 downto 0);
         signal_CPU_REG_sel_OUT: out    vl_logic_vector(2 downto 0);
+        signal_CPU_REG_sel_OUT2: out    vl_logic_vector(2 downto 0);
         signal_CPU_REG_W: out    vl_logic;
         signal_CPU_REG_R: out    vl_logic;
         signal_ALU_tristate: out    vl_logic;

@@ -4,10 +4,10 @@ K3
 cModel Technology
 dC:\Windows\System32
 vALU
-IcVM@@N8FWM^B1D7b2OQO>3
+IQaHTHMEV8K]X3Bnlk_VXH0
 VOeZX1meSiQTRIg2eLL9PR1
 Z0 dC:\Users\marca\Desktop\CPU
-w1704842440
+w1704946096
 8C:/Users/marca/Desktop/CPU/ALU.v
 FC:/Users/marca/Desktop/CPU/ALU.v
 L0 2
@@ -17,7 +17,7 @@ r1
 Z2 !s102 -nocovercells
 Z3 o-work TESTING -nocovercells -O0
 n@a@l@u
-!s100 3W>67j<Hl>5kAe];mY?<P0
+!s100 _X]cA1U_cNO6cdHAgU7TZ3
 !s85 0
 !s101 -O0
 vBOARD_tb
@@ -54,10 +54,10 @@ Z5 o-work work -nocovercells -O0
 !s85 0
 !s101 -O0
 vControlUnit
-I??iBFQCbnjPcCiY;RWh5]2
-VRhe6C3fJ[egjc`EM:WVQn2
+Ih>HiKfAmZ2T2mJh1HLHz81
+VFLO[G[4mP9hcUETle[icT2
 R4
-w1704939022
+w1704942128
 8C:/Users/marca/Desktop/CPU/ControlUnit.v
 FC:/Users/marca/Desktop/CPU/ControlUnit.v
 L0 3
@@ -67,7 +67,7 @@ r1
 R2
 R3
 n@control@unit
-!s100 V8`L2kajcK>ibzC?:M=jD0
+!s100 XCbdzWPe4;Y3Y:ZmA1;X52
 !s85 0
 !s101 -O0
 vcounter
@@ -87,10 +87,10 @@ R3
 !s85 0
 !s101 -O0
 vCPU
-INb:LbIP=c[9foe:znb?GA2
+IVRI[Y4_Lhk`e^aYih?_kS3
 VaGWGiRTFiLZIoBBdTRb5b0
 R4
-w1704938565
+w1704944989
 8C:/Users/marca/Desktop/CPU/CPU.v
 FC:/Users/marca/Desktop/CPU/CPU.v
 L0 1
@@ -100,24 +100,41 @@ r1
 R2
 R3
 n@c@p@u
-!s100 e<N[@eca9c7?kn5`8N47I3
+!s100 O@2b8lb0DdNC?_X2Z3E>P3
 !s85 0
 !s101 -O0
 vCPU_Registers
-IW?8f=9imeJ<GQ]WPSPe:=1
+I1I7HPc5P@]d5V5]e2M?i00
 VnhC>4F03mW2T;7Szlnj6<3
 R4
-w1704799640
-8C:/Users/marca/Desktop/CPU/CPU_Registers.v
-FC:/Users/marca/Desktop/CPU/CPU_Registers.v
-L0 1
+w1704941577
+Z6 8C:/Users/marca/Desktop/CPU/CPU_Registers.v
+Z7 FC:/Users/marca/Desktop/CPU/CPU_Registers.v
+L0 26
 R1
 r1
 31
 R2
 R3
 n@c@p@u_@registers
-!s100 <WHRzl:XFTG;:aSI_?XaE3
+!s100 d7?nPEfmEQzEIf4TV5;613
+!s85 0
+!s101 -O0
+vCPU_Registers_2OUT
+I;cLm`3:bVlS[L]VD]:mnT0
+V;Db]R6F0o;4fT^fd10^je1
+R4
+w1704942924
+R6
+R7
+L0 1
+R1
+r1
+31
+R2
+R3
+n@c@p@u_@registers_2@o@u@t
+!s100 8:9olR[<LHzb1z41gQ>5_2
 !s85 0
 !s101 -O0
 vmachine
