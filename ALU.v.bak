@@ -9,7 +9,7 @@ module ALU(input wire enable,clk,
   initial begin
     SignFlag=1'b0;
     CFlag=1'b0;
-    ZeroFlag=1'b0;
+    //ZeroFlag=1'b0;
   end
   always @(posedge clk) begin
     if(enable) begin
@@ -23,6 +23,7 @@ module ALU(input wire enable,clk,
       `OR:Buffer<=in_a|in_b;
       `XOR:Buffer<=in_a^in_b;
       `NOT:Buffer<=~in_a;
+      `CMP:{CFlag,Buffer}<=in_a-in_b;
       endcase
     
     //ZeroFlag=(Buffer==0)?1'b1:1'b0;

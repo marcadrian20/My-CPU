@@ -23,6 +23,7 @@ module ALU(input wire enable,clk,
       `OR:Buffer<=in_a|in_b;
       `XOR:Buffer<=in_a^in_b;
       `NOT:Buffer<=~in_a;
+      `CMP:{CFlag,Buffer}<=in_b-in_a;
       endcase
     
     //ZeroFlag=(Buffer==0)?1'b1:1'b0;
