@@ -63,7 +63,7 @@ always @(posedge clk&~halted) begin///obv important to not be halted ;)))
     `T6:state<=`S_NEXT;
     //`T7:state<=`S_NEXT;
     endcase
-  cycle<=(cycle>6)?0:cycle+1;//The state machine has 4/5 states(retarded states to be precise)
+  cycle<=(cycle>6)?0:cycle+1;//The state machine has 5/6 states(retarded states to be precise)
 end
 ///////////////////////SIGNALS///////////////////////// 
 ///////////////////////////////////////////////////////
@@ -96,15 +96,15 @@ end
   /////CHECK???->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>^^^^^^^^^^^^^^^^^^>>>>>>>>>>>>>>>>>>>>>>>>>>>^^^^^^^^^^^^^^^
   assign mux_switch=(opcode==`LDI); 
 ////////////////MEM I/O    //00001/010/001/000/00 MOV REG B<-A||
-  assign signal_read_D_mem=(state==`S_MEM_R)&((opcode==`MOV&&ADDRM==Dir_addr)|opcode==`LDR|opcode==`POP)|state==`S_STACK_POP
-                            |state==`S_STACK_POP_PC;
+  assign signal_read_D_mem=(state==`S_MEM_R)&((opcode==`MOV&&ADDRM==Dir_addr)|opcode==`LDR|opcode==`POP)|(state==`S_JMP&opcode==`RET)|state==`S_STACK_POP;
+                            //|state==`S_STACK_POP_PC;
   assign signal_write_D_mem=(state==`S_MEM_W)&(opcode==`STR)|state==`S_STACK_PUSH|state==`S_STACK_PUSH_PC;
   assign DMAR_bus[7:0]=(opcode==`MOV&&ADDRM==Dir_addr)?{3'b0,instruction[4:0]}:(opcode==`LDR||opcode==`STR)?instruction[7:0]:'bz;
   assign signal_D_MAR=signal_SP_tristate|state==`S_MEM_R|(state==`S_MEM_W);//&~opcode==`STR);
   //////////////STACK SIGNALS
   assign signal_SP=(state==`S_STACK_DEC|state==`S_STACK_INC);
   assign signal_SP_dec=(state==`S_STACK_DEC);
-  assign signal_SP_tristate=(state==`S_STACK_POP|state==`S_STACK_PUSH|state==`S_STACK_PUSH_PC|state==`S_STACK_POP_PC);
+  assign signal_SP_tristate=(state==`S_STACK_POP|state==`S_STACK_PUSH|state==`S_STACK_PUSH_PC|(state==`S_JMP&opcode==`RET));//state==`S_STACK_POP_PC);
   assign signal_PC_tristate=(state==`S_STACK_PUSH_PC);
 /////////////////////Reseting on reset_cycle or reset command
 always @(posedge reset_cycle or posedge reset) begin//not necessarily good practice
