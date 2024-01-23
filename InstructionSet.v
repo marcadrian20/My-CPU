@@ -18,23 +18,18 @@
 `define JNZ 5'b10001
 `define JC 5'b10010
 `define JNC 5'b10011
-`define HLT 5'b10100
+`define PUSH 5'b10100
+`define POP 5'b10101
+`define CALL 5'b10110
+`define RET 5'b10111
+`define HLT 5'b11000
 /////////
 /*
 `define LSHL 5'b10011 ->logical shift
 `define LSHR 5'b10100
 `define ASHL 5'b10101->arithmetic shift
 `define ASHR 5'b10110
-`define PUSH 5'b10111
-`define POP 5'b11000
-`define CMP 5'b11001
-`define CLF 5'b11010->clear flags
-`define SLF 5'b11011->set flags
-`define CALL 5'b11100
-`define RET 5'b11101
 `define INT 5'b11110->interrupt
-`define BCZ 5'b11111
-`define BCNZ
 `define MUL
 `define DIV
 ALU:[OPCODE] [DEST] [REG]// [REG]

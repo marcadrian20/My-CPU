@@ -3,11 +3,11 @@ module ALU(input wire enable,clk,
            input wire [4:0]OPCODE,
            input wire [15:0]in_a,in_b,
            output wire [15:0]out,
-           output reg SignFlag,CFlag,
-           output wire ZeroFlag);
+           output reg CFlag,
+           output wire SignFlag,ZeroFlag);
   reg [15:0] Buffer;
   initial begin
-    SignFlag=1'b0;
+    //SignFlag=1'b0;
     CFlag=1'b0;
     //ZeroFlag=1'b0;
   end
@@ -27,9 +27,10 @@ module ALU(input wire enable,clk,
       endcase
     
     //ZeroFlag=(Buffer==0)?1'b1:1'b0;
-    SignFlag=(Buffer<0)?1'b1:1'b0;
+    //SignFlag=(Buffer<0)?1'b1:1'b0;
     end
   end
+  assign SignFlag=(Buffer<0)?1'b1:1'b0;
   assign ZeroFlag = ~(|Buffer);
     assign out=Buffer;
 endmodule

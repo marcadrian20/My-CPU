@@ -3,8 +3,9 @@
 module ControlUnit(input wire [15:0]instruction,
                    input wire clk,reset,CFLAG,ZFLAG,
                    output reg halted,
-                   output wire mux_switch,
+                   output wire mux_switch,signal_mux_switch_PC,signal_PC_tristate,
                    output wire signal_PC,signal_PC_sel,signal_read_I_mem,
+                   output wire signal_SP,signal_SP_dec,signal_SP_tristate,
                    output wire signal_read_D_mem,signal_write_D_mem,signal_IR,
                    output wire signal_I_MAR,signal_D_MAR,signal_ALU,
                    output wire[2:0]signal_CPU_REG_sel_IN,signal_CPU_REG_sel_OUT,signal_CPU_REG_sel_OUT2,
@@ -48,19 +49,27 @@ always @(posedge clk&~halted) begin///obv important to not be halted ;)))
     `T3:state<=(opcode==`HLT)?`S_HALT:(opcode==`LDR||opcode==`MOV)?`S_MEM_R:
         (opcode==`ADD||opcode==`SUB||opcode==`ADC||opcode==`INC||opcode==`DEC||opcode==`CMP||
         opcode==`AND||opcode==`OR||opcode==`XOR||opcode==`NOT)?`S_ALU_FETCH:(opcode==`LDI||opcode==`STR)?`S_MEM_W:
-        (opcode==`JMP||opcode==`JNZ||opcode==`JZ||opcode==`JC||opcode==`JNC)?`S_JMP:`S_NEXT;
+        (opcode==`JMP||opcode==`JNZ||opcode==`JZ||opcode==`JC||opcode==`JNC)?`S_JMP:(opcode==`PUSH)?`S_STACK_PUSH:
+        (opcode==`POP||opcode==`RET)?`S_STACK_INC:(opcode==`CALL)?`S_STACK_PUSH_PC:`S_NEXT;
     ////////////DECODE AND SET PROPER STATES
-    `T4:state<=(state==`S_MEM_R)?`S_MEM_W:
+    `T4:state<=(state==`S_MEM_R)?`S_MEM_W:(state==`S_STACK_PUSH)?`S_STACK_DEC:
+              (opcode==`POP)?`S_STACK_POP:
+              (opcode==`RET)?`S_STACK_POP_PC:
+              (state==`S_STACK_PUSH_PC)?`S_STACK_DEC:
               (state==`S_ALU_FETCH)?`S_ALU_OUT:`S_NEXT;
-              //(state==`S_FETCH_PC)?`S_JMP:`S_NEXT;
     ///FINAL STATES->finish writing to mem//
-    `T5:state<=`S_NEXT;
+    `T5:state<=(state==`S_STACK_DEC)?`S_JMP:
+            (state==`S_STACK_POP_PC)?`S_JMP:`S_NEXT;
+    `T6:state<=`S_NEXT;
+    //`T7:state<=`S_NEXT;
     endcase
-  cycle<=(cycle>5)?0:cycle+1;//The state machine has 4/5 states(retarded states to be precise)
+  cycle<=(cycle>6)?0:cycle+1;//The state machine has 4/5 states(retarded states to be precise)
 end
 ///////////////////////SIGNALS///////////////////////// 
 ///////////////////////////////////////////////////////
-  assign jump_allow=(opcode==`JMP|opcode==`JNZ&~ZFLAG|opcode==`JZ&ZFLAG|opcode==`JC&CFLAG|opcode==`JNC&~CFLAG); 
+  assign jump_allow=(opcode==`JMP|opcode==`JNZ&~ZFLAG|opcode==`JZ&ZFLAG|opcode==`JC&CFLAG|opcode==`JNC&~CFLAG)|
+                    opcode==`CALL|opcode==`RET; 
+  assign signal_mux_switch_PC=(opcode==`RET)?1'b0:1'b1;
   assign signal_halt=state==`S_HALT;
   assign reset_cycle=state==`S_NEXT;
   //////////////PROGRAM COUNTER SIGNALS                                ______________________________________
@@ -75,20 +84,28 @@ end
   assign signal_ALU_tristate=state==`S_ALU_OUT;
   ////////////CPU REGISTER I/O LINE SELECT->IN^HI(MOV&ALU)||OUT^HI(MOV_regaddr&STR)
   assign signal_CPU_REG_sel_IN=(opcode==`ADD|opcode==`SUB|opcode==`ADC|opcode==`INC|opcode==`DEC|opcode==`AND|
-        opcode==`OR|opcode==`XOR|opcode==`NOT|opcode==`LDR)?instruction[10:8]:(opcode==`LDI)?3'b0:(opcode==`MOV)?instruction[7:5]:'bz;
+        opcode==`OR|opcode==`XOR|opcode==`NOT|opcode==`LDR|opcode==`POP)?instruction[10:8]:(opcode==`LDI)?3'b0:
+        (opcode==`MOV)?instruction[7:5]:'bz;
   assign signal_CPU_REG_sel_OUT=(opcode==`MOV&&ADDRM==Reg_addr)?instruction[4:2]:(opcode==`STR|opcode==`NOT|opcode==`CMP|
-        opcode==`INC|opcode==`DEC)?instruction[10:8]:(state==`S_ALU_FETCH)?instruction[7:5]:3'bz;
+        opcode==`INC|opcode==`DEC|opcode==`PUSH)?instruction[10:8]:(state==`S_ALU_FETCH)?instruction[7:5]:3'bz;
   assign signal_CPU_REG_sel_OUT2=(opcode==`ADD|opcode==`SUB|opcode==`ADC|opcode==`AND|
         opcode==`OR|opcode==`XOR)?instruction[4:2]:(opcode==`CMP)?instruction[7:5]:3'bz;
-  assign signal_CPU_REG_R=state==`S_ALU_FETCH|((state==`S_MEM_R|state==`S_MEM_W)&(ADDRM==Reg_addr))|opcode==`STR;
-  assign signal_CPU_REG_W=state==`S_ALU_OUT|signal_read_D_mem|(state==`S_MEM_W&(opcode==`MOV|opcode==`LDI|opcode==`STR))&~(opcode==`STR);
-  assign mux_switch=opcode==`LDI?1'b1:1'b0; 
+  assign signal_CPU_REG_R=state==`S_ALU_FETCH|((state==`S_MEM_R|state==`S_MEM_W)&(ADDRM==Reg_addr))
+          |opcode==`STR|state==`S_STACK_PUSH;
+  assign signal_CPU_REG_W=state==`S_ALU_OUT|signal_read_D_mem&~opcode==`RET|(state==`S_MEM_W&(opcode==`MOV|opcode==`LDI))&~(opcode==`STR);
+  /////CHECK???->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>^^^^^^^^^^^^^^^^^^>>>>>>>>>>>>>>>>>>>>>>>>>>>^^^^^^^^^^^^^^^
+  assign mux_switch=(opcode==`LDI); 
 ////////////////MEM I/O    //00001/010/001/000/00 MOV REG B<-A||
-  assign signal_read_D_mem=(state==`S_MEM_R)&((opcode==`MOV&&ADDRM==Dir_addr)|opcode==`LDR);
-  assign signal_write_D_mem=(state==`S_MEM_W)&(opcode==`STR);
+  assign signal_read_D_mem=(state==`S_MEM_R)&((opcode==`MOV&&ADDRM==Dir_addr)|opcode==`LDR|opcode==`POP)|state==`S_STACK_POP
+                            |state==`S_STACK_POP_PC;
+  assign signal_write_D_mem=(state==`S_MEM_W)&(opcode==`STR)|state==`S_STACK_PUSH|state==`S_STACK_PUSH_PC;
   assign DMAR_bus[7:0]=(opcode==`MOV&&ADDRM==Dir_addr)?{3'b0,instruction[4:0]}:(opcode==`LDR||opcode==`STR)?instruction[7:0]:'bz;
-  assign signal_D_MAR=state==`S_MEM_R|(state==`S_MEM_W);//&~opcode==`STR);
-  
+  assign signal_D_MAR=signal_SP_tristate|state==`S_MEM_R|(state==`S_MEM_W);//&~opcode==`STR);
+  //////////////STACK SIGNALS
+  assign signal_SP=(state==`S_STACK_DEC|state==`S_STACK_INC);
+  assign signal_SP_dec=(state==`S_STACK_DEC);
+  assign signal_SP_tristate=(state==`S_STACK_POP|state==`S_STACK_PUSH|state==`S_STACK_PUSH_PC|state==`S_STACK_POP_PC);
+  assign signal_PC_tristate=(state==`S_STACK_PUSH_PC);
 /////////////////////Reseting on reset_cycle or reset command
 always @(posedge reset_cycle or posedge reset) begin//not necessarily good practice
     cycle<=0;

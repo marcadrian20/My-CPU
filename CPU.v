@@ -30,7 +30,9 @@ wire [2:0]signal_CPU_REG_sel_IN,signal_CPU_REG_sel_OUT,signal_CPU_REG_sel_OUT2;
 wire signal_CPU_REG_W,signal_CPU_REG_R;
 wire [7:0] pc_out;//output wire from the instr pointer  
 wire [7:0] DMAR_bus;
-wire signal_ALU_tristate,mux_switch;
+wire signal_ALU_tristate,mux_switch,signal_SP_tristate;
+wire signal_SP,signal_SP_dec;
+wire signal_mux_switch_PC,signal_PC_tristate;
 /////////////////////////////////////
  reg cycle_clk = 0;
   reg internal_clk = 0;
@@ -61,6 +63,11 @@ ControlUnit CU(.clk(cycle_clk),
                .ZFLAG(zero_flag),
                .halted(cpu_halted),
                .mux_switch(mux_switch),
+               .signal_mux_switch_PC(signal_mux_switch_PC),
+               .signal_PC_tristate(signal_PC_tristate),
+               .signal_SP(signal_SP),
+               .signal_SP_dec(signal_SP_dec),
+               .signal_SP_tristate(signal_SP_tristate),
                .signal_PC(signal_PC),
                .signal_PC_sel(signal_PC_sel),
                .signal_read_I_mem(signal_read_I_mem),
@@ -81,16 +88,35 @@ ControlUnit CU(.clk(cycle_clk),
                .ADDRM(ADDRM_),
                .state(cpu_state),
                .opcode(OPCODE));
-               
+
+////////////PC MUX/////////
+wire [7:0] pc_in; 
+Multiplexer #(.BitCount(8)) pc_mux(.SEL_LINE(signal_mux_switch_PC),
+                                   .in_a(BUS[7:0]),
+                                   .in_b(DATA_BUS[7:0]),
+                                   .out(pc_in));
 ////////////Program counter
 counter PC(.SEL(signal_PC_sel),
           .clk(internal_clk&signal_PC),
           .reset(reset),
           .DEC(1'b0),
-          .in(BUS[7:0]),
+          .in(pc_in),///on jmp state i take the addr dir from inst.!!Test with inst_reg_out
           .out(pc_out));
-
-
+//PC OUT TRIstate
+ TristateBuffer #(.BitCount(16)) PC_tristate(.in({8'b0,pc_out}),
+                                .enable(signal_PC_tristate),
+                                .out(DATA_BUS));
+/////////////////////Stack pointer
+wire [7:0] sp_out;
+counter SP(.SEL(reset),
+           .clk(internal_clk&signal_SP|reset),
+           .reset(1'b0),
+           .DEC(signal_SP_dec),
+           .in(8'hFF),
+           .out(sp_out));
+ TristateBuffer #(.BitCount(8)) SP_tristate(.in(sp_out),
+                                .enable(signal_SP_tristate),
+                                .out(DMAR_bus));
 //////////INSTRUCTION MAR(memory address register)
 register #(.BitCount(8)) INST_MAR(.st(signal_I_MAR),
                   .clk(internal_clk),
@@ -111,7 +137,7 @@ Multiplexer mux(.SEL_LINE(mux_switch),
                         .out(mux_out));
 //////////CPU registers
 //wire [15:0] regA_out;
-wire [15:0] ALU_IN_BUS;
+wire [15:0] ALU_IN_BUS,REGS_OUT;
 CPU_Registers_2OUT CPU_regs(.clk(internal_clk),
               .data_in(mux_out),
               .sel_in(signal_CPU_REG_sel_IN),
@@ -119,9 +145,13 @@ CPU_Registers_2OUT CPU_regs(.clk(internal_clk),
               .sel_out2(signal_CPU_REG_sel_OUT2),
               .write_enable(signal_CPU_REG_W),
               .output_enable(signal_CPU_REG_R),
-              .data_out(DATA_BUS),
+              .data_out(REGS_OUT),
               .data_out2(ALU_IN_BUS)
               );
+              
+TristateBuffer #(.BitCount(16)) REGS_tristate(.in(REGS_OUT),
+                                .enable(signal_CPU_REG_R),
+                                .out(DATA_BUS));
 ////////////////ACC
 //wire [15:0] TMP_wire;
 /*register #(.BitCount(16)) ACC(.st(signal_ALU),

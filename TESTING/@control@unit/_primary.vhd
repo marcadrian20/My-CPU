@@ -9,9 +9,14 @@ entity ControlUnit is
         ZFLAG           : in     vl_logic;
         halted          : out    vl_logic;
         mux_switch      : out    vl_logic;
+        signal_mux_switch_PC: out    vl_logic;
+        signal_PC_tristate: out    vl_logic;
         signal_PC       : out    vl_logic;
         signal_PC_sel   : out    vl_logic;
         signal_read_I_mem: out    vl_logic;
+        signal_SP       : out    vl_logic;
+        signal_SP_dec   : out    vl_logic;
+        signal_SP_tristate: out    vl_logic;
         signal_read_D_mem: out    vl_logic;
         signal_write_D_mem: out    vl_logic;
         signal_IR       : out    vl_logic;
