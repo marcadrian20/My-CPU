@@ -1,6 +1,3 @@
-Here is the complete README with the information you provided:
-
----
 
 # My-CPU
 
